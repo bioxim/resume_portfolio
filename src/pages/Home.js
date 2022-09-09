@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HeroImage from '../components/img/hero-image-home.jpg';
+import Contact from './Contact';
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
         <Main>
         <article className="hero-image area">
             <aside className="hero-image-opacity ">
-            <ul class="circles">
+            <ul className="circles">
                     <li></li>
                     <li></li>
                     <li></li>
@@ -31,6 +32,7 @@ const Home = () => {
             </aside>
         </article>
         </Main>
+        <Contact />
       </>
     );
   };
