@@ -49,6 +49,8 @@ const NavContainer = styled.nav`
   align-items: center;
   justify-content: space-between;
   z-index: 4;
+  position: fixed;
+  width: 100%;
   
   a{
     color: white;
@@ -69,7 +71,7 @@ const NavContainer = styled.nav`
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    transition: all .8s ease;
+    transition: all 1s ease;
     z-index: 3;
     a{
       color: white;
@@ -93,13 +95,13 @@ const NavContainer = styled.nav`
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    top: 30%;
+    top: 90%;
     left: 0;
     right: 0;
     text-align: center;
     a{
       font-size: 2rem;
-      margin-top: 1rem;
+      margin-top: 1.3rem;
       color: white;
     }
   }
@@ -125,13 +127,13 @@ const BgDiv = styled.div`
   width: 100%;
   height: 100%;
   z-index: 2;
-  transition: all .8s ease ;
+  transition: all 1s ease ;
   
   &.active{
     border-radius: 0 0 80% 0;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 90vh;
   }
 `

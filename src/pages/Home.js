@@ -1,37 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
 import HeroImage from '../components/img/hero-image-home.jpg';
+import About from './About';
 import Contact from './Contact';
 
 const Home = () => {
     return (
       <>
         <Main>
-        <article className="hero-image area">
-            <aside className="hero-image-opacity ">
-            <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            </ul>
-                <div className="hero-image-content">
-                    <div className="hero-image-title">
-                        <div className="tagline text-left">Hi! My name is</div> 
-                        Maria Ximena Camino
-                        <div className="subtitle text-right">IT Agronomist</div>
-                    </div>
-                    <button className="btn animated">About me</button>
-                </div>
-            </aside>
-        </article>
+          <article className="hero-image area">
+              <aside className="hero-image-opacity ">
+              <ul className="circles">
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+                      <li></li>
+              </ul>
+                  <div className="hero-image-content">
+                      <div className="hero-image-title">
+                          <div className="tagline text-left">Hi! My name is</div> 
+                          Maria Ximena Camino
+                          <div className="subtitle text-right">IT Agronomist</div>
+                      </div>
+                      <button className="btn animated">About me</button>
+                  </div>
+              </aside>
+          </article>
         </Main>
+        <About />
         <Contact />
       </>
     );
@@ -89,14 +91,14 @@ const Home = () => {
     }
 
     .hero-image-opacity {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
   
   .hero-image-title {
     font-size: 7.5vw;
@@ -144,7 +146,7 @@ const Home = () => {
     /* background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);   */
     width: 100%;
     min-height:auto;
-    z-index: -100;
+    z-index: -1000;
     }
 
     .circles{
