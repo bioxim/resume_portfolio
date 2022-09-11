@@ -30,24 +30,59 @@ const About = () => {
           </article>
           <article>
               <h2 class="text-center text-lg-left">My IT Skills</h2>
-              <section class="tags">
-                  <div class="tag">Excel</div>
-                  <div class="tag">PowerBi</div>
-                  <div class="tag">CSS</div>
-                  <div class="tag">HTML</div>
-                  <div class="tag">Javascript</div>
-                  <div class="tag">React</div>
-                  <div class="tag">Python</div>
-                  <div class="tag">Figma</div>
-                  <div class="tag">MongoDB</div>
-                  <div class="tag">MySQL</div>
-                  <div class="tag">Wordpress</div>
-                  <div class="tag">Cloud</div>
-                  <div class="tag">Minery Rigs</div>
-                  <div class="tag">Webpack</div>
-                  <div class="tag">Node.js</div>
-                  <div class="tag">Json</div>                
-              </section>
+                <div className="cloud-container">
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Excel</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#PowerBI</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#CSS</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#HTML</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Javascript</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#React</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Python</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Figma</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#MongoDB</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#MySQL</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Wordpress</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Cloud</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Minery</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Blockchain</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Webpack</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Node.js</span>
+                  </a>
+                  <a href="/tags/mvp/">
+                    <span className="tag tag-minimum-viable-product tag-lg">#Json</span>
+                  </a>
+                </div>
             </article>
         </section>
         </Acerca>
@@ -185,6 +220,37 @@ const About = () => {
       opacity: 1;
     }
 
+    /* Cloud tags of my IT skills */
+
+    .cloud-container {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      flex-wrap: wrap;
+      align-content: flex-start;
+    }
+
+    .tag {
+        display: inline-block;
+        border-radius: 3px;
+        padding: .2em .5em .3em;
+        border-radius: 2px;
+        background: #454e56;
+        font-weight: 600;
+        margin: .25em .1em
+    }
+
+    .tag-lg {
+       font-size: 1.2em;
+       border-radius: 4px;
+    }
+
+    .tag-minimum-viable-product {
+      color: #fff;
+      background-image: linear-gradient(90deg, #ff8901, #db1d5f);
+      font-weight: 700;
+    }
+
     @media(min-width: 1024px){
       
       .full-lg-screen {
@@ -205,6 +271,6 @@ const About = () => {
 
       .text-lg-left {
       text-align: left;
-    }
+      }
     }
   `
