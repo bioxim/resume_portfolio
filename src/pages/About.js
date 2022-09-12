@@ -156,7 +156,10 @@ const About = () => {
     }
 
     .section {
-      padding: 2rem 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 3rem;
+      padding-top: 6rem;
     }
 
     .text-center {

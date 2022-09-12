@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import HeroImage from '../components/img/hero-image-home.jpg';
 import About from './About';
 import Contact from './Contact';
+import Portfolio from './Portfolio';
 
 const Home = () => {
     return (
       <>
-        <Main>
+        {/* <Main>
           <article className="hero-image area">
               <aside className="hero-image-opacity ">
               <ul className="circles">
@@ -32,8 +33,9 @@ const Home = () => {
                   </div>
               </aside>
           </article>
-        </Main>
-        <About />
+        </Main> */}
+        {/* <About /> */}
+        <Portfolio />
         <Contact />
       </>
     );
