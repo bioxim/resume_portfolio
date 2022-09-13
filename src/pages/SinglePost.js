@@ -5,15 +5,15 @@ import styled from 'styled-components';
 const Dashboard = () => {
     return (
       <>
-        <Tablero>
-          <h1>Navegación Dashboard</h1>
-        </Tablero>
+        <Post>
+          <h1>Navegación Single-Post Page</h1>
+        </Post>
       </>
     );
   };
   
   export default Dashboard;
 
-  const Tablero = styled.div`
+  const Post = styled.div`
   
   `
