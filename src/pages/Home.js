@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import CrudPortfolio from '../components/CrudPortfolio';
 import HeroImage from '../components/img/hero-image-home.jpg';
 import About from './About';
 import Blog from './Blog';
 import Contact from './Contact';
-import Portfolio from './Portfolio';
 import SinglePost from './SinglePost';
 
 const Home = () => {
@@ -37,9 +37,9 @@ const Home = () => {
           </article>
         </Main> */}
         {/* <About /> */}
-        {/* <Portfolio /> */}
+        <CrudPortfolio />
         {/* <Blog /> */}
-        <SinglePost />
+        {/* <SinglePost /> */}
         <Contact />
       </>
     );

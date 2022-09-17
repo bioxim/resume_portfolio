@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import portfolio1 from '../components/img/portfolio-1.jpg';
-import portfolio2 from '../components/img/portfolio-2.jpg';
-import portfolio3 from '../components/img/portfolio-3.jpg';
-import portfolio4 from '../components/img/portfolio-4.jpg';
 
 
-const Portfolio = () => {
+const Portfolio = ({ data }) => {
+    // console.log(data)
     return (
       <>
         <Portafolio>
@@ -29,6 +27,13 @@ const Portfolio = () => {
           </article>   
           {/* Portfolio Body */}
           <article className="section portfolio-big">
+          {/* {data.length > 0 ? (
+            data.map((el) => (
+
+            ))
+            ) : (
+              <h2>No data</h2>
+            )} */}
             <a href="#link-github-1" target="_blank" className="portfolio-main container">
                 <div class="portfolio-main-container">
                     <span>Javascript</span>
@@ -36,45 +41,6 @@ const Portfolio = () => {
                 </div>
                 <div className="card-text">
                   <h2 className="card-text-title">Portfolio title #1</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                 </p>
-                </div>
-            </a>
-
-            <a href="#link-github-2" target="_blank" class="portfolio-main container">
-                <div className="portfolio-main-container">
-                    <span>Blockchain</span>
-                    <img src={portfolio2} alt="Trabajo 1"/>
-                </div>
-                <div className="card-text">
-                  <h2 class="card-text-title">Portfolio title #2</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                  </p>
-                </div>
-            </a>
-
-            <a href="#link-github-3" target="_blank" class="portfolio-main container">
-                <div class="portfolio-main-container">
-                    <span>React</span>
-                    <img src={portfolio3} alt="Trabajo 3"/>
-                </div>
-                <div class="card-text">
-                  <h2 class="card-text-title">Portfolio title #3</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                 </p>
-                </div>
-            </a>
-
-            <a href="#link-github-4" target="_blank" class="portfolio-main container">
-                <div class="portfolio-main-container">
-                    <span>Python</span>
-                    <img src={portfolio4} alt="Trabajo 4"/>
-                </div>
-                <div class="card-text">
-                  <h2 class="card-text-title">Portfolio title #4</h2>
                   <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
                  </p>
