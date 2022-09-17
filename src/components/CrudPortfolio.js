@@ -13,15 +13,14 @@ const CrudPortfolio = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    let api = helpHttp();
-    let url = "http://localhost:1337/api/portfolios";
+    let url = "http://localhost:1337/api/portfolios?populate=*";
 
     useEffect(() => {
         setLoading(true);
         helpHttp()
           .get(url)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (!res.err) {
               setDb(res);
               setError(null);
@@ -31,7 +30,7 @@ const CrudPortfolio = () => {
             }
             setLoading(false);
           });
-      }, [url]);    
+      }, [url]);
 
   return (
       <MainCrud>

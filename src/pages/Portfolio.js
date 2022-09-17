@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
-import portfolio1 from '../components/img/portfolio-1.jpg';
+import PortfolioCard from './PortfolioCard';
+
+const parseJSON = (resp) => (resp.json ? resp.json() : resp);
+
+const checkStatus = (resp) => {
+  if (resp.status >= 200 && resp.status < 300) {
+    return resp;
+  }
+
+  return parseJSON(resp).then(resp => {
+    throw resp;
+  });
+};
+
+const headers = { 'Content-Type': 'application/json' };
 
 
 const Portfolio = ({ data }) => {
-    // console.log(data)
-    return (
+
+  const [error, setError] = useState(null);
+  const [portfolios, setPortfolios] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:1337/api/portfolios?populate=*', { headers, method: 'GET' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(({ data }) => setPortfolios(data))
+      .catch((error) => setError(error))
+  }, [])
+
+  if (error) {
+    // Print errors if any
+    return <div>An error occured: {error.message}</div>;
+  }
+     return (
       <>
         <Portafolio>
-          {/* Portfolio Header */}
           <article className="header">
               <h1>My <i>Github</i> Porfolio</h1>
               <div>
@@ -24,32 +52,24 @@ const Portfolio = ({ data }) => {
                 </g>
                 </svg>
               </div>
-          </article>   
-          {/* Portfolio Body */}
-          <article className="section portfolio-big">
-          {/* {data.length > 0 ? (
-            data.map((el) => (
-
-            ))
-            ) : (
-              <h2>No data</h2>
-            )} */}
-            <a href="#link-github-1" target="_blank" className="portfolio-main container">
-                <div class="portfolio-main-container">
-                    <span>Javascript</span>
-                    <img src={portfolio1} alt="Trabajo 1"/>
-                </div>
-                <div className="card-text">
-                  <h2 className="card-text-title">Portfolio title #1</h2>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                 </p>
-                </div>
-            </a>
           </article>
+          <article className="section portfolio-big">   
+          {portfolios.length > 0 ? (
+            portfolios.map((el) => (
+              <PortfolioCard
+                key={el.id}
+                el={el}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">Sin datos</td>
+            </tr>
+          )}
+          </article>  
           <article className="section text-center">
-            <a href="/" className="load-more">Load more</a>
-        </article>
+              <a href="/" className="load-more">Load more</a>
+          </article>
         </Portafolio>
       </>
     );
