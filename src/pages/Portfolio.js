@@ -1,6 +1,9 @@
 import React, { useState, useEffect} from 'react';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 import styled from 'styled-components';
 import PortfolioCard from './PortfolioCard';
+
 
 const parseJSON = (resp) => (resp.json ? resp.json() : resp);
 
@@ -16,24 +19,24 @@ const checkStatus = (resp) => {
 
 const headers = { 'Content-Type': 'application/json' };
 
-
 const Portfolio = ({ data }) => {
 
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [portfolios, setPortfolios] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:1337/api/portfolios?populate=*', { headers, method: 'GET' })
+    setLoading(true);
+    fetch(`http://localhost:1337/api/portfolios?populate=*`, { headers, method: 'GET' })
       .then(checkStatus)
       .then(parseJSON)
-      .then(({ data }) => setPortfolios(data))
+      .then(({ data }) => { 
+        setPortfolios(data)
+        setLoading(false);  
+      })
       .catch((error) => setError(error))
   }, [])
 
-  if (error) {
-    // Print errors if any
-    return <div>An error occured: {error.message}</div>;
-  }
      return (
       <>
         <Portafolio>
@@ -53,7 +56,14 @@ const Portfolio = ({ data }) => {
                 </svg>
               </div>
           </article>
-          <article className="section portfolio-big">   
+          <article className="section portfolio-big">
+          {loading && <Loader />}
+          {error && (
+          <Message
+            msg={`Error ${error.status}: ${error.statusText}`}
+            bgColor="#dc3545"
+          />
+          )}   
           {portfolios.length > 0 ? (
             portfolios.map((el) => (
               <PortfolioCard
@@ -63,13 +73,13 @@ const Portfolio = ({ data }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="3">Sin datos</td>
+              <td colSpan="3">No Data</td>
             </tr>
           )}
-          </article>  
+          </article> 
           <article className="section text-center">
-              <a href="/" className="load-more">Load more</a>
-          </article>
+              <a href={`https://github.com/bioxim`} target="_blank" className="load-more" rel="noreferrer">All repositories</a>
+          </article> 
         </Portafolio>
       </>
     );
@@ -178,7 +188,7 @@ const Portfolio = ({ data }) => {
       font-weight: bold;
       transition: all 150ms linear;
       margin-bottom: 2rem;
-    }
+    } 
 
     .load-more:hover, .load-more:active {
       color: #293d4e;
