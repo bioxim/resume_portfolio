@@ -93,6 +93,9 @@ const About = () => {
   export default About;
 
   const Acerca = styled.div`
+
+    padding-top: 4rem;
+
     a {
       color: #509ee3;
       transition: all 0.5s ease-out;

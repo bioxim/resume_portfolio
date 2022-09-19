@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import BurgerButton from './BurgerButton';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import BurgerButton from './BurgerButton'
 
 function Navbar() {
 
@@ -12,14 +13,16 @@ function Navbar() {
   return (
     <>
       <NavContainer>
-        <h2>Xime <span>Camino</span></h2>
+        <div className={`${clicked ? 'active' : ''}`}>
+          <a onClick={handleClick} href="/"><h2>Xime <span>Camino</span></h2></a>          
+        </div>        
         <div className={`links ${clicked ? 'active' : ''}`}>
-          <a onClick={handleClick} href="#h">Home</a>
-          <a onClick={handleClick} href="#h">About</a>
-          <a onClick={handleClick} href="#h">Portfolio</a>
-          <a onClick={handleClick} href="#h">Blog</a>
-          <a onClick={handleClick} href="#h">Contact</a>
-          <a onClick={handleClick} href="#h">Resume</a>
+          <a onClick={handleClick} href="/">Home</a>
+          <a onClick={handleClick} href="/about">About</a>
+          <a onClick={handleClick} href="/portfolio">Portfolio</a>
+          <a onClick={handleClick} href="/blog">Blog</a>
+          <a onClick={handleClick} href="/contact">Contact</a>
+          <a onClick={handleClick} href="https://bioxim.github.io/resume_model/assets/resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
         <div className='burguer'>
           <BurgerButton clicked={clicked} handleClick={handleClick} />

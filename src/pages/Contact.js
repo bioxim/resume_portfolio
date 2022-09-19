@@ -79,6 +79,8 @@ const Contact = () => {
 
   const Contacto = styled.div`
 
+  padding-top: 4rem;
+
   small > a {
     color: #509ee3;
     transition: all 0.5s ease-out;
