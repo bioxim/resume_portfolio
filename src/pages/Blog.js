@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Blogbar } from '../components/Blogbar';
 import notes1 from '../components/img/notes-1.jpg';
-import notes2 from '../components/img/notes-2.jpg';
-import notes3 from '../components/img/notes-3.jpg';
-import notes4 from '../components/img/notes-4.jpg';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+
+const parseJSON = (resp) => (resp.json ? resp.json() : resp);
+
+const checkStatus = (resp) => {
+  if (resp.status >= 200 && resp.status < 300) {
+    return resp;
+  }
+
+  return parseJSON(resp).then(resp => {
+    throw resp;
+  });
+};
+
+  const headers = { 'Content-Type': 'application/json' };
+
 
 const Blog = () => {
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`http://localhost:1337/api/categories`, { headers, method: 'GET' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(({ data }) => { 
+        setCategories(data)
+        setLoading(false);  
+      })
+      .catch((error) => setError(error))
+  }, [])
+
     return (
       <>
         <Notes>
@@ -27,7 +58,27 @@ const Blog = () => {
             </div>
           </article>
           <article className="section portfolio-big">
-            <Blogbar />
+            <ul className="nav text-center">
+              {loading && <Loader />}
+              {error && (
+              <Message
+                msg={`Error ${error.status}: ${error.statusText}`}
+                bgColor="#dc3545"
+              />
+              )}   
+              {categories.length > 0 ? (
+                categories.map((el) => (
+                  <Blogbar
+                    key={el.id}
+                    el={el}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">No Categories yet.</td>
+                </tr>
+              )}
+            </ul>
             <div className="container-fit">
                 <a href="notes-single-post.html" target="_self" className="portfolio-main container">
                     <div className="portfolio-main-container">
@@ -42,48 +93,6 @@ const Blog = () => {
                     </div>
                 </a>
             </div>
-            <div>
-                <a href="notes-single-post.html" target="_self" className="portfolio-main container">
-                    <div className="portfolio-main-container">
-                        <span>Blockchain</span>
-                        <img src={notes2} alt="Trabajo 1"/>
-                    </div>
-                    <div className="card-text">
-                      <h2 className="card-text-title">Note title #2</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                      </p>
-                    </div>
-                </a>
-            </div>
-            <div>
-                <a href="notes-single-post.html" target="_self" className="portfolio-main container">
-                    <div className="portfolio-main-container">
-                        <span>React</span>
-                        <img src={notes3} alt="Trabajo 3"/>
-                    </div>
-                    <div className="card-text">
-                      <h2 className="card-text-title">Note title #3</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                     </p>
-                    </div>
-                </a>
-            </div>
-            <div>
-                <a href="notes-single-post.html" target="_self" className="portfolio-main container">
-                    <div className="portfolio-main-container">
-                        <span>Python</span>
-                        <img src={notes4} alt="Trabajo 4"/>
-                    </div>
-                    <div className="card-text">
-                      <h2 className="card-text-title">Note title #4</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                     </p>
-                    </div>
-                </a>
-            </div>
           </article>
           <article className="section text-center">
             <a href="/" className="load-more">Load more</a>
@@ -92,7 +101,7 @@ const Blog = () => {
       </>
     );
   };
-  
+
   export default Blog;
 
   const Notes = styled.div`
@@ -164,6 +173,20 @@ const Blog = () => {
         font-size:24px;
       }
     }
+
+    /* Nav del blog */
+
+    .nav {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 3.75rem;
+      padding: 0;
+      /* font-size: 0.875rem; */
+    }
+
 
     /* Body Blog */
 

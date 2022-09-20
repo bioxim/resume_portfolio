@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import HeroImage from '../components/img/hero-image-home.jpg'
 
@@ -27,7 +28,7 @@ const Home = () => {
                           Maria Ximena Camino
                           <div className="subtitle text-right">IT Agronomist</div>
                       </div>
-                      <button className="btn animated">About me</button>
+                      <Link to="/about" className="btn animated">About me</Link>
                   </div>
               </aside>
           </article>

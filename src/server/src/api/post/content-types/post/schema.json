@@ -4,7 +4,8 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Posts"
+    "displayName": "Posts",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -29,20 +30,21 @@
     "tag_main": {
       "type": "string"
     },
-    "category": {
+    "categories": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::category.category"
     },
     "image_main": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "tags": {
       "type": "relation",

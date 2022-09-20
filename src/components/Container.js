@@ -8,6 +8,7 @@ import Contact from '../pages/Contact'
 import About from '../pages/About'
 import Portfolio from '../pages/Portfolio'
 import Blog from '../pages/Blog'
+import Error404 from '../pages/Error404'
 
 
 const Container = () => {
@@ -21,6 +22,7 @@ const Container = () => {
                 <Route path='/portfolio' element={<Portfolio />} />
                 <Route path='/blog' element={<Blog />} />
                 <Route path='/contact' element={<Contact />} />
+                <Route path='*' element={<Error404 />} />
             </Routes>
         </BrowserRouter>
         <Contact />

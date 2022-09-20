@@ -16,7 +16,7 @@ const About = () => {
               <p>I am an agronomist graduated in 2009.  Throughout these years I specialized myself in international trading of raw materials such as honey, corn and sunflower and the statistic analysis in these product's Market.</p>
               <p>At the same time, I have always being interested in programming, web development and data science, partly because the companies for whom I worked just then needed a main website, custom reports from big amount of information, traceability systems, among other requirements.</p>
               <div className="section text-center text-lg-left card-container">
-                  <a className="btn btn__primary" href="assets/resume.pdf" target="_blank" rel="noopener">
+                  <a className="btn btn__primary" href="https://bioxim.github.io/resume_model/assets/resume.pdf" target="_blank" rel="noopener noreferrer">
                       My Resume
                   </a>
               </div>

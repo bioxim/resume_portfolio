@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components';
 
-export const Blogbar = () => {
+export const Blogbar = ({ el }) => {
+
+  let { name } = el.attributes
+
   return (
     <Navigation>
-        <ul className="nav text-center">
-            <li className="nav-item active"><a className="nav-link" href="/">All</a></li>
-            <li className="nav-item"><a className="nav-link" href="/">Crypto</a></li>
-            <li className="nav-item"><a className="nav-link" href="/">Programming</a></li>
-            <li className="nav-item"><a className="nav-link" href="/">Design</a></li>
-            <li className="nav-item"><a className="nav-link" href="/">Data Science</a></li>
-        </ul>
+            <li className="nav-item active"><a className="nav-link" href="/">{name}</a></li>
     </Navigation>
   )
 }
@@ -21,17 +18,6 @@ const Navigation = styled.div`
 
     .text-center {
         text-align: center;
-    }
-
-    .nav {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 3.75rem;
-      padding: 0;
-      /* font-size: 0.875rem; */
     }
 
     .nav-item a {
