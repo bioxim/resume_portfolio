@@ -21,9 +21,6 @@
     "description": {
       "type": "text"
     },
-    "updated": {
-      "type": "date"
-    },
     "body": {
       "type": "richtext"
     },
@@ -50,6 +47,9 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::tag.tag"
+    },
+    "date": {
+      "type": "string"
     }
   }
 }

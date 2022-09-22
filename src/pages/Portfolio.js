@@ -43,7 +43,7 @@ const Portfolio = ({ data }) => {
           <article className="header">
               <h1>My <i>Github</i> Porfolio</h1>
               <div>
-                <svg className="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <svg className="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
                 <defs>
                 <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
                 </defs>
@@ -72,9 +72,9 @@ const Portfolio = ({ data }) => {
               />
             ))
           ) : (
-            <tr>
-              <td colSpan="3">No Data</td>
-            </tr>
+            <section>
+              <h5>No Data</h5>
+            </section>
           )}
           </article> 
           <article className="section text-center">

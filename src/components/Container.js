@@ -8,6 +8,7 @@ import Contact from '../pages/Contact'
 import About from '../pages/About'
 import Portfolio from '../pages/Portfolio'
 import Blog from '../pages/Blog'
+import SinglePost from '../pages/SinglePost'
 import Error404 from '../pages/Error404'
 
 
@@ -22,6 +23,7 @@ const Container = () => {
                 <Route path='/portfolio' element={<Portfolio />} />
                 <Route path='/blog' element={<Blog />} />
                 <Route path='/contact' element={<Contact />} />
+                <Route path='/blog/:id/:slug' element={<SinglePost />} />
                 <Route path='*' element={<Error404 />} />
             </Routes>
         </BrowserRouter>

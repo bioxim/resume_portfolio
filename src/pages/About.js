@@ -29,7 +29,7 @@ const About = () => {
               </div>
           </article>
           <article>
-              <h2 class="text-center text-lg-left">My IT Skills</h2>
+              <h2 className="text-center text-lg-left">My IT Skills</h2>
                 <div className="cloud-container">
                   <a href="/tags/mvp/">
                     <span className="tag tag-minimum-viable-product tag-lg">#Excel</span>

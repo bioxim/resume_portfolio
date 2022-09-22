@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Blogbar } from '../components/Blogbar';
-import notes1 from '../components/img/notes-1.jpg';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import { Blogbar } from '../components/Blogbar'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import BlogCard from './BlogCard'
 
 const parseJSON = (resp) => (resp.json ? resp.json() : resp);
 
@@ -25,6 +25,7 @@ const Blog = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -38,13 +39,27 @@ const Blog = () => {
       .catch((error) => setError(error))
   }, [])
 
+  useEffect(() => {
+    setLoading(true);
+    fetch(`http://localhost:1337/api/posts?populate=*`, { headers, method: 'GET' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(({ data }) => { 
+        setPosts(data)
+        setLoading(false);  
+      })
+      .catch((error) => setError(error))
+  }, [])
+
+  
+
     return (
       <>
         <Notes>
           <article className="header">
             <h1>Blog</h1>
             <div>
-              <svg className="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+              <svg className="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
               <defs>
               <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
               </defs>
@@ -74,25 +89,31 @@ const Blog = () => {
                   />
                 ))
               ) : (
-                <tr>
-                  <td colSpan="3">No Categories yet.</td>
-                </tr>
+                <section>
+                  <h5>No Categories yet.</h5>
+                </section>
               )}
             </ul>
-            <div className="container-fit">
-                <a href="notes-single-post.html" target="_self" className="portfolio-main container">
-                    <div className="portfolio-main-container">
-                        <span>Javascript</span>
-                        <img src={notes1} alt="Trabajo 1"/>
-                    </div>
-                    <div className="card-text">
-                      <h2 className="card-text-title">Note title #1</h2>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo officia nesciunt alias ipsexplicabo exercitationem est modi quis amet illo culpa ex, quae asperiores aliquam natus navoluptates cupiditate dignissimos!
-                     </p>
-                    </div>
-                </a>
-            </div>
+            
+              {loading && <Loader />}
+                {error && (
+                <Message
+                  msg={`Error ${error.status}: ${error.statusText}`}
+                  bgColor="#dc3545"
+                />
+                )}
+              {posts.length > 0 ? (
+                posts.map((el) => (
+                  <BlogCard
+                    key={el.id}
+                    el={el}
+                  />
+                ))
+              ) : (
+                <section>
+                  <h5>No Data</h5>
+                </section>
+              )}
           </article>
           <article className="section text-center">
             <a href="/" className="load-more">Load more</a>
@@ -190,7 +211,7 @@ const Blog = () => {
 
     /* Body Blog */
 
-    a {
+    a, Link {
       font-size: 1.2rem;
     }
 
@@ -285,7 +306,7 @@ const Blog = () => {
     opacity: 1;
   }
 
-  a.portfolio-main {
+  a.portfolio-main, :Link.portfolio-main {
     text-decoration: none;
   }
 

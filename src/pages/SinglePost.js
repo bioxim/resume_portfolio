@@ -1,63 +1,100 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { Blogbar } from '../components/Blogbar';
-import photo from '../components/img/notes-1.jpg';
-import image from '../components/img/notes-2.jpg';
-import RelatedPosts from '../components/RelatedPosts';
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import photo from '../components/img/post-image-main.jpg';
+// import RelatedPosts from '../components/RelatedPosts';
+
+const parseJSON = (resp) => (resp.json ? resp.json() : resp);
+
+const checkStatus = (resp) => {
+  if (resp.status >= 200 && resp.status < 300) {
+    return resp;
+  }
+
+  return parseJSON(resp).then(resp => {
+    throw resp;
+  });
+};
+
+  const headers = { 'Content-Type': 'application/json' }
 
 
-const Dashboard = () => {
+const SinglePost = () => {
+
+  let params = useParams();
+  // console.log(params);
+
+  let { id } = params
+
+  let url = 'http://localhost:1337/api/posts/' + id + '?populate=*'
+  // console.log(url)
+
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [post, setPost] = useState([null]);
+  
+    useEffect(() => {
+      setLoading(true);
+      fetch(url, { headers, method: 'GET' })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(({ data }) => { 
+          setPost(data)
+          setLoading(false);  
+        })
+        .catch((error) => setError(error))
+    }, [url])
+
     return (
       <>
         <Post>
-          {/* Blog Header w title */}
-          <article className="margin-none">
-              <div className="header">
-                <aside className="container-single-note">
-                  <div>
-                      <div className="subtitle-single-note">
-                          Xime Camino
-                          <span className="set-dot"></span>
-                          Sep 05, 2022
+          {loading && <Loader />}
+                {error && (
+                <Message
+                  msg={`Error ${error.status}: ${error.statusText}`}
+                  bgColor="#dc3545"
+                />
+                )}
+          { post.attributes != null ? 
+            <>
+              <article className="margin-none">
+                <div className="header">
+                  <aside className="container-single-note">
+                    <div>
+                        <div className="subtitle-single-note">
+                            Xime Camino
+                            <span className="set-dot"></span>
+                            {post.attributes.date}
+                        </div>
+                        <h1>{post.attributes.title}</h1>
+                    </div>
+                  </aside>
+                </div>
+              </article>
+              <article>
+                <div>
+                    <Link className="link-back" to='/blog'>Back to main</Link>
+                    <h4>{post.attributes.description}</h4>
+                    <aside className="container portfolio-main">
+                      <div className="portfolio-main-container">
+                          <img src={`http://localhost:1337${post.attributes.image_main.data.attributes.url}`} alt={post.attributes.title}/>
                       </div>
-                      <h1>Lorem ipsum dolor sit amet consectetur adipisicing.</h1>
-                  </div>
-                </aside>
-              </div>
-          </article>
-          {/* Blog body */}
-          <article className="container">
-            <div>
-                <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptates numquam exercitationem beatae excepturi quo harum, architecto voluptatem maxime. Voluptatum quod explicabo assumenda rerum expedita ullam eius consectetur tempora reprehenderit.</h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente maiores cum tenetur explicabo culpa vitae soluta earum, illo adipisci quia expedita accusamus voluptatem, porro, debitis suscipit doloribus voluptas eius officia?</p>
-                <p>Mollitia provident qui iure corrupti error tenetur officiis inventore consequatur exercitationem, modi voluptate, laborum nulla odit unde velit itaque dicta veniam eligendi! Commodi itaque maiores soluta voluptate, assumenda libero deleniti.</p>
-                <p>Cumque possimus ut magni magnam nostrum omnis perspiciatis incidunt rerum corrupti tempora adipisci quisquam qui quo porro harum amet provident maxime voluptas quod libero odio, aspernatur non. Nulla, cumque! Maxime?</p>
-            </div>
-          </article>
-          <article className="container portfolio-main">
-            <div className="portfolio-main-container">
-                <img src={image} alt="Trabajo 2"/>
-            </div>
-          </article> 
-          <article className="container">
-            <div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, necessitatibus. Qui facilis officiis, eum pariatur repellendus minus natus asperiores nobis laboriosam exercitationem id odio ipsa officia temporibus? Suscipit, minus doloribus.</p>
-                <p>Soluta, velit? Dignissimos debitis, soluta, repudiandae iure nam et facere, autem qui praesentium cum odit tempore a impedit! Magni quis similique id earum velit provident sunt quo mollitia suscipit omnis.</p>
-                <p>Error reiciendis, ipsa animi quis temporibus laudantium molestias, deleniti beatae vitae iusto ea iure consectetur, mollitia aliquid pariatur et qui odit magnam ipsum tempore similique maiores eveniet cum! Quis, eum.</p>
-                <p>Placeat pariatur ea dignissimos, quo quam in ducimus reiciendis eius eligendi odio magnam autem hic veritatis libero a praesentium quasi suscipit impedit aspernatur tempora fuga fugit deleniti! Explicabo, veniam. Necessitatibus.</p>
-            </div>
-          </article> 
-          {/* Tags and social */}
-          <article class="container">
-            <hr/>
-          </article>
-          <article className="social-note-container padding-sides padding-sides-lg">
+                    </aside>
+                    <p>{post.attributes.body}</p>
+                </div>
+              </article>
+              <article className="container">
+                <hr/>
+              </article>
+              <article className="social-note-container padding-sides padding-sides-lg">
             <div>
                 <span className="tag-title">Tags:</span>
-                <a className="tag" href="/">Company</a>&nbsp;
-                <a className="tag" href="/">Design</a>
-                &nbsp;
-                <a className="tag" href="/">Business</a>
+                {post.attributes.tags.data.map((el) => (
+                  <a key={el.id} className="tag" href="/">{el.attributes.name}</a>
+                ))}&nbsp;
+                
             </div>
             <aside className="container">
                 <hr/>
@@ -65,26 +102,30 @@ const Dashboard = () => {
             <div>
                 <ul className="nav">
                     <span className="tag-title">Share:</span>
-                    <li className="nav-item"><a class="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" fill="none">
+                    <li className="nav-item"><a className="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" fill="none">
                                 <path fill="currentColor" d="M5.15 2.158H6.3V.091C6.102.063 5.42 0 4.625 0 2.966 0 1.83 1.077 1.83 3.054v1.821H0v2.31h1.83V13h2.244V7.186H5.83l.28-2.311H4.073V3.283c0-.668.174-1.125 1.076-1.125Z"></path>
                             </svg></a></li>
-                    <li className="nav-item"><a class="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="none">
+                    <li className="nav-item"><a className="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" fill="none">
                                 <path fill="currentColor" d="M14.324 3.849c.01.13.01.262.01.393 0 3.991-3.155 8.59-8.922 8.59a9.11 9.11 0 0 1-4.814-1.355c.252.028.495.038.757.038a6.434 6.434 0 0 0 3.892-1.29c-1.378-.028-2.533-.898-2.931-2.094.194.028.388.046.592.046.281 0 .563-.037.825-.103C2.296 7.794 1.22 6.58 1.22 5.111v-.037a3.25 3.25 0 0 0 1.417.383c-.844-.542-1.398-1.468-1.398-2.515 0-.56.156-1.075.427-1.524C3.21 3.251 5.53 4.448 8.13 4.578a3.288 3.288 0 0 1-.077-.692c0-1.664 1.398-3.02 3.135-3.02.903 0 1.718.365 2.291.954a6.32 6.32 0 0 0 1.99-.729 3.035 3.035 0 0 1-1.378 1.664 6.477 6.477 0 0 0 1.805-.467 6.61 6.61 0 0 1-1.572 1.56Z"></path>
                             </svg></a></li>
-                    <li className="nav-item"><a class="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="14" fill="none">
+                    <li className="nav-item"><a className="nav-link" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="14" fill="none">
                                 <path fill="currentColor" d="M5.844 0C2.904 0 0 1.919 0 5.024 0 6.998 1.134 8.12 1.822 8.12c.283 0 .447-.774.447-.992 0-.261-.68-.817-.68-1.902 0-2.256 1.754-3.854 4.023-3.854 1.95 0 3.394 1.085 3.394 3.08 0 1.489-.61 4.283-2.586 4.283-.714 0-1.324-.505-1.324-1.229 0-1.06.756-2.087.756-3.18 0-1.858-2.69-1.521-2.69.723 0 .471.06.993.276 1.422-.396 1.666-1.204 4.149-1.204 5.865 0 .53.078 1.052.13 1.582.097.107.048.096.197.043 1.444-1.936 1.392-2.315 2.045-4.848.353.657 1.264 1.01 1.985 1.01C9.634 10.123 11 7.22 11 4.603 11 1.818 8.542 0 5.844 0Z"></path>
                             </svg></a></li>
                 </ul>
             </div>
           </article>
+            </>
+            : <section>
+                <h5>No Data</h5>
+              </section> 
+          }
         </Post>
-        <RelatedPosts />
-        <Blogbar />
+        {/* <RelatedPosts /> */}
       </>
     );
   };
   
-  export default Dashboard;
+  export default SinglePost;
 
   const Post = styled.div`
     
@@ -116,6 +157,12 @@ const Dashboard = () => {
       line-height: 1.6;
     }
 
+    article > div {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-top: 1rem;
+    }
+
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -137,7 +184,7 @@ const Dashboard = () => {
       max-width: 80%;
     }
 
-    .header{
+    .header {
       position:relative;
       overflow:hidden;
       display:flex;
@@ -152,7 +199,7 @@ const Dashboard = () => {
       color:#eee;
     }
 
-    .header:after{
+    .header:after {
       content:"";
       width:100%;
       height:100%;
@@ -163,7 +210,7 @@ const Dashboard = () => {
       background: linear-gradient(to bottom, rgba(0,0,0,0.12) 40%,rgba(27,32,48,1) 100%);
     }
   
-    .header:before{
+    .header:before {
       content:"";
       width:100%;
       height:200%;
@@ -185,6 +232,16 @@ const Dashboard = () => {
     @keyframes grow{
       0% { transform: scale(1) translateY(0px)}
       50% { transform: scale(1.2) translateY(-400px)}
+    }
+
+    .link-back {
+      text-decoration: none;
+      display: flow-root;
+      text-align: right;
+      color: #509ee3;
+      &:hover {
+        color: #293d4e;
+      }
     }
     
     .margin-none{
