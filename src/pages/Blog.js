@@ -27,6 +27,8 @@ const Blog = () => {
   const [categories, setCategories] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  
+
   useEffect(() => {
     setLoading(true);
     fetch(`http://localhost:1337/api/categories`, { headers, method: 'GET' })
@@ -39,9 +41,11 @@ const Blog = () => {
       .catch((error) => setError(error))
   }, [])
 
-  useEffect(() => {
+    let url = 'http://localhost:1337/api/posts?populate=*'
+  
+    useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:1337/api/posts?populate=*`, { headers, method: 'GET' })
+    fetch( url, { headers, method: 'GET' })
       .then(checkStatus)
       .then(parseJSON)
       .then(({ data }) => { 
@@ -49,9 +53,7 @@ const Blog = () => {
         setLoading(false);  
       })
       .catch((error) => setError(error))
-  }, [])
-
-  
+  }, [url])  
 
     return (
       <>
@@ -73,7 +75,7 @@ const Blog = () => {
             </div>
           </article>
           <article className="section portfolio-big">
-            <ul className="nav text-center">
+            {/* <ul className="nav text-center">
               {loading && <Loader />}
               {error && (
               <Message
@@ -93,7 +95,7 @@ const Blog = () => {
                   <h5>No Categories yet.</h5>
                 </section>
               )}
-            </ul>
+            </ul> */}
             
               {loading && <Loader />}
                 {error && (
@@ -115,9 +117,9 @@ const Blog = () => {
                 </section>
               )}
           </article>
-          <article className="section text-center">
-            <a href="/" className="load-more">Load more</a>
-          </article>
+          {/* <article className="section text-center">
+            <button className="load-more">Load more</button>
+          </article> */}
         </Notes>
       </>
     );
@@ -211,8 +213,13 @@ const Blog = () => {
 
     /* Body Blog */
 
-    a, Link {
+    a, button, Link {
       font-size: 1.2rem;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
     }
 
     img {
